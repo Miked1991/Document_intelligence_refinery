@@ -1,0 +1,20 @@
+# Extraction thresholds and chunking constitution
+confidence:
+  fast_text:
+    min_char_count: 100
+    min_char_density: 0.01   # characters per square point
+    max_image_area_ratio: 0.5
+  vision_escalation_threshold: 0.7
+
+chunking:
+  max_tokens: 512
+  rules:
+    - "A table cell is never split from its header row."
+    - "A figure caption is always stored as metadata of its parent figure chunk."
+    - "A numbered list is always kept as a single LDU unless it exceeds max_tokens."
+    - "Section headers are stored as parent metadata on all child chunks within that section."
+    - "Cross-references are resolved and stored as chunk relationships."
+
+budget:
+  max_cost_per_document: 5.0   # USD
+  vision_cost_per_page: 0.01   # estimate
