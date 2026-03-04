@@ -1,0 +1,30 @@
+{
+  "doc_id": "ethiopian_airlines_financial_2023",
+  "origin_type": "native_digital",
+  "layout_complexity": "table_heavy",
+  "language": "en",
+  "language_confidence": 0.99,
+  "domain_hint": "financial",
+  "estimated_extraction_cost": "needs_layout_model",
+  "num_pages": 89,
+  "has_handwriting": false,
+  "metadata": {
+    "author": "Ethiopian Airlines Group",
+    "title": "Consolidated Financial Statements 2023",
+    "creation_date": "2024-03-20",
+    "producer": "Microsoft Word",
+    "file_size_bytes": 8912896,
+    "has_tables": true,
+    "has_figures": true,
+    "has_footnotes": true,
+    "estimated_tables": 67,
+    "estimated_figures": 12,
+    "table_density": 0.75
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "layout",
+    "fallback_strategy": "vision",
+    "confidence_threshold": 0.85,
+    "special_handling": ["complex_tables", "currency_symbols"]
+  }
+}

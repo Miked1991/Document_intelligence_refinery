@@ -1,0 +1,32 @@
+{
+  "doc_id": "infrastructure_assessment_2023",
+  "origin_type": "mixed",
+  "layout_complexity": "figure_heavy",
+  "language": "en",
+  "language_confidence": 0.94,
+  "domain_hint": "technical",
+  "estimated_extraction_cost": "needs_layout_model",
+  "num_pages": 212,
+  "has_handwriting": false,
+  "metadata": {
+    "author": "Ethiopian Roads Authority",
+    "title": "National Infrastructure Assessment 2023",
+    "date": "2023-05-30",
+    "file_size_bytes": 35651584,
+    "has_tables": true,
+    "has_figures": true,
+    "has_maps": true,
+    "has_drawings": true,
+    "estimated_tables": 28,
+    "estimated_figures": 156,
+    "estimated_maps": 23,
+    "estimated_drawings": 45,
+    "figure_density": 0.73
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "layout",
+    "fallback_strategy": "vision",
+    "confidence_threshold": 0.8,
+    "special_handling": ["technical_drawings", "maps", "spatial_data"]
+  }
+}

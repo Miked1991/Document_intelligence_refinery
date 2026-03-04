@@ -1,0 +1,32 @@
+{
+  "doc_id": "national_budget_execution_2022",
+  "origin_type": "native_digital",
+  "layout_complexity": "table_heavy",
+  "language": "en",
+  "language_confidence": 0.97,
+  "domain_hint": "financial",
+  "estimated_extraction_cost": "needs_layout_model",
+  "num_pages": 203,
+  "has_handwriting": false,
+  "metadata": {
+    "author": "Ministry of Finance - Budget Directorate",
+    "title": "National Budget Execution Report - Fiscal Year 2022",
+    "date": "2023-03-30",
+    "file_size_bytes": 31457280,
+    "has_tables": true,
+    "has_figures": true,
+    "estimated_tables": 187,
+    "estimated_figures": 34,
+    "table_density": 0.94,
+    "has_sectoral_breakdown": true,
+    "has_monthly_data": true,
+    "has_variance_analysis": true,
+    "has_appropriation_accounts": true
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "layout",
+    "fallback_strategy": "vision",
+    "confidence_threshold": 0.92,
+    "special_handling": ["budget_lines", "variance_tables", "appropriation_formats"]
+  }
+}

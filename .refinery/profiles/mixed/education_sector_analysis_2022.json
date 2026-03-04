@@ -1,0 +1,31 @@
+{
+  "doc_id": "education_sector_analysis_2022",
+  "origin_type": "mixed",
+  "layout_complexity": "mixed",
+  "language": "en",
+  "language_confidence": 0.97,
+  "domain_hint": "technical",
+  "estimated_extraction_cost": "needs_layout_model",
+  "num_pages": 156,
+  "has_handwriting": false,
+  "metadata": {
+    "author": "Ministry of Education",
+    "title": "Education Sector Development Program VI - Assessment Report",
+    "date": "2022-12-10",
+    "file_size_bytes": 19876864,
+    "has_tables": true,
+    "has_figures": true,
+    "has_charts": true,
+    "has_infographics": true,
+    "estimated_tables": 67,
+    "estimated_figures": 42,
+    "estimated_charts": 28,
+    "has_statistical_data": true
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "layout",
+    "fallback_strategy": "vision",
+    "confidence_threshold": 0.78,
+    "special_handling": ["statistical_tables", "infographics", "trend_charts"]
+  }
+}

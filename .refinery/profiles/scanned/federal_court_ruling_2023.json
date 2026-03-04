@@ -1,0 +1,31 @@
+{
+  "doc_id": "federal_court_ruling_2023",
+  "origin_type": "scanned_image",
+  "layout_complexity": "single_column",
+  "language": "en",
+  "language_confidence": 0.68,
+  "domain_hint": "legal",
+  "estimated_extraction_cost": "needs_vision_model",
+  "num_pages": 34,
+  "has_handwriting": true,
+  "metadata": {
+    "author": "Federal Supreme Court",
+    "title": "Civil Appeal No. 456/2023 - Ruling",
+    "scan_date": "2023-11-05",
+    "scanner": "HP ScanJet Pro 2500",
+    "file_size_bytes": 18874368,
+    "dpi": 200,
+    "has_handwritten_notes": true,
+    "handwriting_locations": ["page_23", "page_24", "page_25", "page_26"],
+    "has_seals": true,
+    "has_signatures": true,
+    "paper_quality": "poor",
+    "ocr_confidence_estimate": 0.65
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "vision",
+    "fallback_strategy": null,
+    "confidence_threshold": 0.6,
+    "special_handling": ["poor_quality", "handwriting_heavy", "judicial_format"]
+  }
+}

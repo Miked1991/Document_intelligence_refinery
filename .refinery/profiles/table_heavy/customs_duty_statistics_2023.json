@@ -1,0 +1,31 @@
+{
+  "doc_id": "customs_duty_statistics_2023",
+  "origin_type": "native_digital",
+  "layout_complexity": "table_heavy",
+  "language": "en",
+  "language_confidence": 0.98,
+  "domain_hint": "financial",
+  "estimated_extraction_cost": "needs_layout_model",
+  "num_pages": 156,
+  "has_handwriting": false,
+  "metadata": {
+    "author": "Ethiopian Customs Commission",
+    "title": "Customs Duty Collection Statistics - Fiscal Year 2023",
+    "date": "2024-01-20",
+    "file_size_bytes": 18874368,
+    "has_tables": true,
+    "has_figures": true,
+    "estimated_tables": 134,
+    "estimated_figures": 12,
+    "table_density": 0.88,
+    "has_hs_codes": true,
+    "has_quarterly_data": true,
+    "has_regional_breakdown": true
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "layout",
+    "fallback_strategy": "vision",
+    "confidence_threshold": 0.88,
+    "special_handling": ["hs_codes", "regional_data", "quarterly_comparisons"]
+  }
+}

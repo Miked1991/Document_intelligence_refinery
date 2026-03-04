@@ -1,0 +1,30 @@
+{
+  "doc_id": "dashen_bank_annual_2023",
+  "origin_type": "native_digital",
+  "layout_complexity": "mixed",
+  "language": "en",
+  "language_confidence": 0.97,
+  "domain_hint": "financial",
+  "estimated_extraction_cost": "needs_layout_model",
+  "num_pages": 156,
+  "has_handwriting": false,
+  "metadata": {
+    "author": "Dashen Bank S.C.",
+    "title": "Annual Report and Financial Statements 2023",
+    "creation_date": "2024-02-28",
+    "producer": "Adobe InDesign",
+    "file_size_bytes": 16777216,
+    "has_tables": true,
+    "has_figures": true,
+    "has_footnotes": true,
+    "estimated_tables": 52,
+    "estimated_figures": 31,
+    "has_charts": true
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "layout",
+    "fallback_strategy": "vision",
+    "confidence_threshold": 0.8,
+    "special_handling": ["charts", "multi_column_layout"]
+  }
+}

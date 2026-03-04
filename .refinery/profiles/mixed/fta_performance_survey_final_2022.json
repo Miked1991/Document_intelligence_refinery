@@ -1,0 +1,33 @@
+{
+  "doc_id": "fta_performance_survey_final_2022",
+  "origin_type": "mixed",
+  "layout_complexity": "mixed",
+  "language": "en",
+  "language_confidence": 0.96,
+  "domain_hint": "technical",
+  "estimated_extraction_cost": "needs_layout_model",
+  "num_pages": 178,
+  "has_handwriting": false,
+  "metadata": {
+    "author": "TAK-IRDI Consortium",
+    "title": "Assessment of Financial Transparency and Accountability (FTA) Implementation",
+    "submitted_to": "Ministry of Finance",
+    "date": "2022-08-15",
+    "file_size_bytes": 28311552,
+    "has_tables": true,
+    "has_figures": true,
+    "has_diagrams": true,
+    "has_photos": true,
+    "has_appendices": true,
+    "estimated_tables": 43,
+    "estimated_figures": 28,
+    "estimated_diagrams": 15,
+    "estimated_photos": 22
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "layout",
+    "fallback_strategy": "vision",
+    "confidence_threshold": 0.75,
+    "special_handling": ["mixed_content", "figure_captions", "cross_references"]
+  }
+}

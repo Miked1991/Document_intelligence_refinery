@@ -1,0 +1,30 @@
+{
+  "doc_id": "ministry_law_proclamation_2022",
+  "origin_type": "scanned_image",
+  "layout_complexity": "multi_column",
+  "language": "en",
+  "language_confidence": 0.82,
+  "domain_hint": "legal",
+  "estimated_extraction_cost": "needs_vision_model",
+  "num_pages": 245,
+  "has_handwriting": false,
+  "metadata": {
+    "author": "Ministry of Justice",
+    "title": "Legal Proclamation No. 1234/2022",
+    "scan_date": "2023-01-10",
+    "scanner": "Fujitsu fi-7160",
+    "file_size_bytes": 89221120,
+    "dpi": 400,
+    "has_seals": true,
+    "seal_locations": ["page_1", "page_245"],
+    "has_signatures": true,
+    "signature_locations": ["page_245"],
+    "ocr_confidence_estimate": 0.79
+  },
+  "extraction_recommendations": {
+    "primary_strategy": "vision",
+    "fallback_strategy": null,
+    "confidence_threshold": 0.75,
+    "special_handling": ["legal_citations", "seal_detection", "signature_preservation"]
+  }
+}
