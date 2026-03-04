@@ -1,0 +1,521 @@
+# Production-grade configuration for Document Intelligence Refinery
+# All tunable parameters externalized for zero-code onboarding
+
+version: "2.0"
+environment: "production"  # production, staging, development
+
+# Document processing pipeline configuration
+pipeline:
+  max_documents_parallel: 4
+  max_pages_per_document: 500
+  timeout_seconds: 3600
+  retry_attempts: 3
+  retry_delay_seconds: 5
+  
+  # Graceful degradation
+  degradation:
+    enabled: true
+    fallback_strategies: ["fast_text", "layout", "vision"]
+    min_acceptable_confidence: 0.6
+
+# Triage Agent configuration
+triage:
+  origin_detection:
+    native_digital:
+      min_text_pages_ratio: 0.8
+      min_chars_per_page: 100
+    scanned_image:
+      min_image_pages_ratio: 0.8
+      max_text_pages_ratio: 0.2
+    mixed:
+      text_pages_range: [0.2, 0.8]
+  
+  layout_complexity:
+    column_detection:
+      method: "whitespace_analysis"  # or "layout_model"
+      min_column_gap_points: 50
+      max_columns: 4
+    
+    table_detection:
+      min_cells_per_table: 4
+      table_density_threshold: 0.1  # tables per 1000 sq points
+    
+    figure_detection:
+      min_figure_area_ratio: 0.15
+      caption_proximity_threshold: 50  # points
+  
+  domain_classification:
+    method: "keyword"  # or "embedding" or "llm"
+    keywords:
+      financial:
+        - "revenue"
+        - "income"
+        - "balance sheet"
+        - "financial"
+        - "audit"
+      legal:
+        - "court"
+        - "law"
+        - "plaintiff"
+        - "defendant"
+        - "proclamation"
+      technical:
+        - "algorithm"
+        - "data"
+        - "analysis"
+        - "assessment"
+      medical:
+        - "patient"
+        - "diagnosis"
+        - "treatment"
+        - "clinical"
+    
+    confidence_threshold: 0.6
+    
+    llm_fallback:
+      enabled: true
+      model: "openai/gpt-4o-mini"
+      prompt_template: "Classify the domain of this document text: {text}"
+
+# Confidence scoring configuration
+confidence:
+  # Multi-signal weighting
+  signal_weights:
+    character_density: 0.15
+    font_consistency: 0.10
+    table_completeness: 0.20
+    reading_order_coherence: 0.15
+    language_model_perplexity: 0.10
+    ocr_confidence: 0.15
+    layout_stability: 0.05
+    cross_page_consistency: 0.05
+    entity_recognition_confidence: 0.03
+    numerical_precision: 0.02
+  
+  # Signal-specific thresholds
+  thresholds:
+    character_density:
+      expected: 0.0005
+      min_chars_per_page: 100
+    
+    table_completeness:
+      min_rows: 2
+      min_cols: 2
+      acceptable_completeness: 0.85
+    
+    reading_order:
+      min_coherence: 0.7
+      min_continuity: 0.6
+    
+    numerical_precision:
+      expected_decimal_places: 2
+      max_allowed_precision: 4
+  
+  # Statistical validation
+  statistical:
+    min_sample_size: 10
+    outlier_removal: true
+    outlier_std_threshold: 3.0
+    confidence_interval: 0.95
+
+# Extraction strategies configuration
+extraction:
+  # Strategy A: Fast Text (pdfplumber)
+  fast_text:
+    enabled: true
+    tool: "pdfplumber"
+    min_confidence: 0.7
+    config:
+      extract_tables: true
+      extract_words: true
+      line_scale: 50
+      layout_scale: 50
+    
+    confidence_signals:
+      - "character_density"
+      - "font_consistency"
+      - "table_completeness"
+  
+  # Strategy B: Layout-Aware (MinerU/Docking)
+  layout:
+    enabled: true
+    tool: "mineru"  # or "docking"
+    min_confidence: 0.8
+    
+    mineru_config:
+      device: "cuda"  # or "cpu"
+      batch_size: 4
+      layout_model: "doclayout_yolo"
+      formula_enabled: true
+      table_recognition: true
+    
+    docking_config:
+      representation: "DockingDocument"
+      include_figures: true
+      include_tables: true
+      reading_order_reconstruction: true
+    
+    confidence_signals:
+      - "table_completeness"
+      - "reading_order_coherence"
+      - "layout_stability"
+      - "cross_page_consistency"
+  
+  # Strategy C: Vision-Augmented (VLM)
+  vision:
+    enabled: true
+    models:
+      primary: "google/gemini-flash-1.5"
+      fallback: "openai/gpt-4o-mini"
+      tertiary: "mistralai/pixtral-12b"
+    
+    min_confidence: 0.85
+    
+    prompts:
+      extraction: |
+        Extract all text, tables, and figures from this document page.
+        Return a JSON object with:
+        - text_blocks: list of {text, bbox [x1,y1,x2,y2]}
+        - tables: list of {headers: [str], rows: [[str]], bbox}
+        - figures: list of {caption: str, bbox}
+        - reading_order: list of indices in order.
+        Use precise coordinates normalized 0-1000.
+      
+      table_focus: |
+        This page contains financial tables. Extract with high numerical precision.
+        Preserve all decimal places and currency symbols.
+        Return as structured JSON with headers and rows.
+      
+      handwriting: |
+        This page contains handwritten notes. Preserve the handwriting exactly as written.
+        Note any unclear or ambiguous characters with [?].
+    
+    image_processing:
+      dpi: 300
+      format: "PNG"
+      quality: 95
+      max_size_mb: 10
+    
+    confidence_signals:
+      - "ocr_confidence"
+      - "numerical_precision"
+      - "entity_recognition_confidence"
+      - "language_model_perplexity"
+
+# Chunking engine configuration
+chunking:
+  max_tokens: 512
+  overlap_tokens: 50
+  respect_semantic_boundaries: true
+  
+  # Logical Document Unit rules
+  rules:
+    - name: "table_integrity"
+      description: "A table cell is never split from its header row."
+      enabled: true
+      priority: 1
+      action: "merge"
+    
+    - name: "figure_caption"
+      description: "A figure caption is always stored as metadata of its parent figure chunk."
+      enabled: true
+      priority: 2
+      action: "attach_metadata"
+    
+    - name: "list_integrity"
+      description: "A numbered list is always kept as a single LDU unless it exceeds max_tokens."
+      enabled: true
+      priority: 3
+      max_list_items: 50
+    
+    - name: "section_hierarchy"
+      description: "Section headers are stored as parent metadata on all child chunks."
+      enabled: true
+      priority: 4
+      action: "propagate_metadata"
+    
+    - name: "cross_reference_resolution"
+      description: "Cross-references (e.g., 'see Table 3') are resolved and stored as chunk relationships."
+      enabled: true
+      priority: 5
+      resolve_external: true
+  
+  # Chunk types
+  chunk_types:
+    text:
+      max_tokens: 512
+      min_tokens: 50
+      merge_adjacent: true
+      merge_similarity_threshold: 0.8
+    
+    table:
+      max_tokens: 1024
+      preserve_headers: true
+      preserve_structure: true
+    
+    figure:
+      max_tokens: 256
+      include_caption: true
+      include_alt_text: true
+    
+    list:
+      max_tokens: 768
+      preserve_numbering: true
+      preserve_indentation: true
+    
+    code:
+      max_tokens: 1024
+      preserve_language: true
+      preserve_line_numbers: true
+    
+    equation:
+      max_tokens: 256
+      preserve_latex: true
+      preserve_rendering: true
+
+# PageIndex configuration
+pageindex:
+  # Section detection
+  section_detection:
+    method: "hybrid"  # font-based, layout-based, or hybrid
+    heading_fonts:
+      - "Helvetica-Bold"
+      - "Times-Bold"
+      - "Arial-Bold"
+    
+    heading_sizes:
+      min_heading_size: 14
+      size_increase_threshold: 2
+    
+    heading_patterns:
+      - "^[0-9]+\\.\\s+"  # 1. Section
+      - "^[A-Z][A-Z\\s]+$"  # ALL CAPS
+      - "^(Chapter|Section|Article)\\s+[0-9]+"
+    
+    min_section_length: 50  # characters
+    max_section_depth: 10
+  
+  # Summary generation
+  summaries:
+    enabled: true
+    model: "openai/gpt-4o-mini"
+    max_length: 500
+    min_length: 100
+    
+    prompt: |
+      Summarize the following document section in 2-3 sentences.
+      Include key entities, dates, and numerical values.
+      Section title: {title}
+      Content: {content}
+    
+    cache_summaries: true
+    regenerate_on_update: false
+  
+  # Entity extraction
+  entities:
+    enabled: true
+    extractors:
+      - type: "spacy"
+        model: "en_core_web_lg"
+      - type: "regex"
+        patterns:
+          money: "\\$[0-9,]+(\\.[0-9]{2})?"
+          percentage: "[0-9]+(\\.[0-9]+)?%"
+          date: "\\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \\d{1,2},? \\d{4}\\b"
+    
+    min_confidence: 0.7
+    max_entities_per_section: 50
+
+# Query agent configuration
+query:
+  # Tool configuration
+  tools:
+    pageindex_navigate:
+      enabled: true
+      max_results: 5
+      include_children: true
+    
+    semantic_search:
+      enabled: true
+      vector_store: "chroma"
+      max_results: 10
+      min_similarity: 0.7
+      embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+    
+    structured_query:
+      enabled: true
+      database: "sqlite"
+      max_results: 100
+      timeout_seconds: 30
+  
+  # Response generation
+  response:
+    model: "openai/gpt-4o-mini"
+    temperature: 0.1
+    max_tokens: 1000
+    
+    prompt: |
+      Answer the question based on the provided context.
+      Include citations with page numbers and bounding boxes.
+      
+      Context: {context}
+      Question: {question}
+      
+      Answer with citations:
+    
+    require_citations: true
+    citation_format: "[Document: {doc_id}, Page: {page}, Location: {bbox}]"
+  
+  # Audit mode
+  audit:
+    enabled: true
+    verification_method: "exact_match"  # or "semantic" or "hybrid"
+    semantic_threshold: 0.85
+    
+    claim_extraction:
+      enabled: true
+      model: "openai/gpt-4o-mini"
+      prompt: "Extract factual claims from this statement: {claim}"
+
+# Budget management
+budget:
+  limits:
+    per_document_cap_usd: 0.05
+    per_page_cap_usd: 0.001
+    hourly_cap_usd: 1.00
+    daily_cap_usd: 5.00
+    weekly_cap_usd: 25.00
+    monthly_cap_usd: 100.00
+    project_cap_usd: 1000.00
+  
+  # Grace periods (seconds after hitting limit)
+  grace_periods:
+    per_document: 0
+    per_page: 0
+    hourly: 300
+    daily: 3600
+    weekly: 86400
+    monthly: 172800
+    project: 259200
+  
+  # Model pricing (USD per token)
+  model_pricing:
+    google/gemini-flash-1.5:
+      prompt_per_token: 0.000000075
+      completion_per_token: 0.00000030
+      image_cost_per_page: 0.00014
+    
+    openai/gpt-4o-mini:
+      prompt_per_token: 0.00000015
+      completion_per_token: 0.00000060
+      image_cost_per_page: 0.00014
+    
+    mistralai/pixtral-12b:
+      prompt_per_token: 0.00000010
+      completion_per_token: 0.00000040
+      image_cost_per_page: 0.00014
+  
+  # Alerting
+  alerts:
+    email:
+      enabled: false
+      recipients: []
+    
+    webhook:
+      enabled: false
+      url: ""
+    
+    log:
+      enabled: true
+      level: "WARNING"
+    
+    thresholds:
+      info: 0.8  # 80% of limit
+      warning: 0.9  # 90% of limit
+      critical: 1.0  # 100% of limit
+
+# Storage configuration
+storage:
+  profiles_dir: ".refinery/profiles"
+  ledger_path: ".refinery/extraction_ledger.jsonl"
+  pageindex_dir: ".refinery/pageindex"
+  vector_store_path: ".refinery/vectors"
+  fact_table_path: ".refinery/facts.db"
+  budget_dir: ".refinery/budget"
+  
+  retention_days: 90
+  compress_old: true
+  backup_enabled: true
+  backup_interval_hours: 24
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "json"  # or "plain"
+  
+  outputs:
+    console: true
+    file:
+      enabled: true
+      path: ".refinery/refinery.log"
+      max_size_mb: 100
+      backup_count: 5
+    
+    syslog:
+      enabled: false
+      host: "localhost"
+      port: 514
+  
+  fields:
+    - "timestamp"
+    - "level"
+    - "module"
+    - "function"
+    - "line"
+    - "message"
+    - "doc_id"
+    - "strategy"
+    - "confidence"
+    - "cost"
+
+# Performance tuning
+performance:
+  # Parallel processing
+  parallel:
+    enabled: true
+    max_workers: 4
+    chunk_size: 10
+  
+  # Caching
+  cache:
+    enabled: true
+    type: "disk"  # or "redis" or "memory"
+    max_size_mb: 1024
+    ttl_seconds: 3600
+    
+    strategies:
+      profiles: true
+      embeddings: true
+      summaries: true
+  
+  # Memory management
+  memory:
+    max_usage_mb: 4096
+    cleanup_threshold_mb: 3072
+    gc_interval_seconds: 300
+
+# Feature flags
+features:
+  experimental:
+    handwriting_recognition: false
+    cross_reference_resolution: true
+    multi_language_support: false
+    real_time_streaming: false
+  
+  beta:
+    fact_table_extraction: true
+    audit_mode: true
+    cost_optimization: true
+  
+  deprecated:
+    legacy_extraction: false
