@@ -689,7 +689,7 @@ Key Takeaways:
 
 ---
 
-Last Updated: March 2025
+
 Version: 1.0
 
 ```
