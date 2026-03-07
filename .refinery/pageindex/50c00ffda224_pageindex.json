@@ -1,0 +1,155 @@
+{
+  "doc_id": "50c00ffda224",
+  "filename": "50c00ffda224.pdf",
+  "total_pages": 32,
+  "root_sections": [
+    "sec_7c46b5da"
+  ],
+  "sections": {
+    "sec_7c46b5da": {
+      "section_id": "sec_7c46b5da",
+      "title": "Key audit matters are those matters that, in our p",
+      "level": 1,
+      "page_start": 1,
+      "page_end": 1,
+      "parent_id": null,
+      "child_sections": [
+        "sec_bcfa0c81"
+      ],
+      "summary": "Overview of key audit matters are those matters that, in our p. Key audit matters are those matters that, in our professional judgment, were of most significance in our audit of the financial statements of the current period. These matters were addressed...",
+      "key_entities": [
+        "1960",
+        "375",
+        "2017"
+      ],
+      "data_types_present": [
+        "list"
+      ],
+      "chunk_count": 6,
+      "table_count": 0,
+      "figure_count": 0
+    },
+    "sec_bcfa0c81": {
+      "section_id": "sec_bcfa0c81",
+      "title": "40,236,652",
+      "level": 2,
+      "page_start": 1,
+      "page_end": 1,
+      "parent_id": "sec_7c46b5da",
+      "child_sections": [
+        "sec_03176df0"
+      ],
+      "summary": "Overview of 40,236,652. 40,236,652 (4,672,418) 22,560,385 10 11 12 13 66,304,904 30,663,548 9,090,909 (32,560,568) 66,304,904 30,663,548 9,090,909 (32,560,568) 822,169,347 822,169,347 Auditors\u2019 Report Kebede Degefu Certified Public Accountant ETHIOPIAN REINSURANCE SHARE COMPANY STATEMENT OF...",
+      "key_entities": [
+        "4,672,418",
+        "22,560,385",
+        "40,236,652",
+        "10%",
+        "2017",
+        "2016"
+      ],
+      "data_types_present": [],
+      "chunk_count": 4,
+      "table_count": 0,
+      "figure_count": 0
+    },
+    "sec_03176df0": {
+      "section_id": "sec_03176df0",
+      "title": "i) Cash and cash equivalents",
+      "level": 3,
+      "page_start": 1,
+      "page_end": 1,
+      "parent_id": "sec_bcfa0c81",
+      "child_sections": [
+        "sec_88532269"
+      ],
+      "summary": "Overview of i) cash and cash equivalents. i) Cash and cash equivalents Cash and cash equivalents comprise cash in hand, cash at banks in current and deposit accounts and short term, highly liquid investments with maturity periods...",
+      "key_entities": [
+        "35,906,158",
+        "191,691,112",
+        "3"
+      ],
+      "data_types_present": [],
+      "chunk_count": 1,
+      "table_count": 0,
+      "figure_count": 0
+    },
+    "sec_88532269": {
+      "section_id": "sec_88532269",
+      "title": "4 INVESTMENT INCOME",
+      "level": 4,
+      "page_start": 1,
+      "page_end": 1,
+      "parent_id": "sec_03176df0",
+      "child_sections": [
+        "sec_b18d942a"
+      ],
+      "summary": "Overview of 4 investment income. 4 INVESTMENT INCOME Interest on Government Bonds 31,852,603 Corporate Bonds 24,436,912 Time Deposits 16,684,585 Other Investments 4,399,606 Total 82,373,706 ETHIOPIAN REINSURANCE SHARE COMPANY NOTES TO THE FINANCIAL STATEMENTS (continued) Ethiopian...",
+      "key_entities": [
+        "24,436,912",
+        "4",
+        "31,852,603"
+      ],
+      "data_types_present": [],
+      "chunk_count": 1,
+      "table_count": 0,
+      "figure_count": 0
+    },
+    "sec_b18d942a": {
+      "section_id": "sec_b18d942a",
+      "title": "ETHIOPIAN REINSURANCE SHARE COMPANY",
+      "level": 5,
+      "page_start": 1,
+      "page_end": 1,
+      "parent_id": "sec_88532269",
+      "child_sections": [
+        "sec_08c2f9e2"
+      ],
+      "summary": "Overview of ethiopian reinsurance share company. ETHIOPIAN REINSURANCE SHARE COMPANY NOTES TO THE FINANCIAL STATEMENTS (continued) 7 PROPERTY, PLANT AND EQUIPMENT Balance at 30 June 2016 Additions Balance at 30 June 2017 Ethiopian Birr Ethiopian Birr...",
+      "key_entities": [
+        "15%",
+        "7",
+        "30",
+        "2017",
+        "2016"
+      ],
+      "data_types_present": [],
+      "chunk_count": 1,
+      "table_count": 0,
+      "figure_count": 0
+    },
+    "sec_08c2f9e2": {
+      "section_id": "sec_08c2f9e2",
+      "title": "The statutory requirement has been fulfilled by th",
+      "level": 6,
+      "page_start": 1,
+      "page_end": 1,
+      "parent_id": "sec_b18d942a",
+      "child_sections": [],
+      "summary": "Overview of the statutory requirement has been fulfilled by th. The statutory requirement has been fulfilled by the deposit of Grand Renaissance Dam Bonds. ETHIOPIAN REINSURANCE SHARE COMPANY NOTES TO THE FINANCIAL STATEMENTS (continued) Ethiopian Birr Ethiopian Birr Ethiopian Birr...",
+      "key_entities": [
+        "10",
+        "11%",
+        "75,500,000",
+        "5757",
+        "5758",
+        "7%",
+        "2017",
+        "50,000,000"
+      ],
+      "data_types_present": [],
+      "chunk_count": 3,
+      "table_count": 0,
+      "figure_count": 0
+    }
+  },
+  "section_titles": [
+    "Key audit matters are those matters that, in our p",
+    "40,236,652",
+    "i) Cash and cash equivalents",
+    "4 INVESTMENT INCOME",
+    "ETHIOPIAN REINSURANCE SHARE COMPANY",
+    "The statutory requirement has been fulfilled by th"
+  ],
+  "created_at": "2026-03-07T22:41:30.091408"
+}

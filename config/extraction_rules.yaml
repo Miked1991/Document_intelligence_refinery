@@ -1,0 +1,193 @@
+# Extraction Rules Configuration
+# Document Intelligence Refinery
+
+# ============================================
+# CONFIDENCE THRESHOLDS
+# ============================================
+confidence_thresholds:
+  fast_text: 0.6      # Minimum confidence for fast text extraction
+  layout_aware: 0.7   # Minimum confidence for layout-aware extraction
+  vision_augmented: 0.8  # Minimum confidence for vision extraction
+
+# ============================================
+# CHARACTER DENSITY ANALYSIS
+# ============================================
+character_density:
+  min_digital: 100     # Minimum chars per page for digital documents
+  min_scanned: 10      # Minimum chars per page for scanned documents
+  target_ratio: 0.7    # Target ratio of extracted to expected text
+  density_thresholds:
+    very_low: 50       # Very low density (likely scanned)
+    low: 200           # Low density (might be scanned)
+    medium: 500        # Medium density (mixed)
+    high: 1000         # High density (digital)
+
+# ============================================
+# IMAGE ANALYSIS
+# ============================================
+image_ratio:
+  scanned_threshold: 0.5    # >50% image area indicates scanned
+  mixed_threshold: 0.3      # >30% image area indicates mixed
+  figure_min_size: 10000    # Minimum figure size in pixels
+
+# ============================================
+# TABLE DETECTION
+# ============================================
+table_detection:
+  min_rows: 2               # Minimum rows to consider as table
+  min_columns: 2            # Minimum columns to consider as table
+  density_threshold: 0.1    # Table density threshold
+  confidence_threshold: 0.7  # Table detection confidence
+
+# ============================================
+# LAYOUT ANALYSIS
+# ============================================
+layout:
+  multi_column_gap: 100     # Points gap to consider column break
+  header_height: 50         # Points for header detection
+  footer_height: 50         # Points for footer detection
+  min_column_width: 200     # Minimum column width in points
+
+# ============================================
+# CHUNKING RULES
+# ============================================
+chunking:
+  max_tokens: 512           # Maximum tokens per chunk
+  min_tokens: 10            # Minimum tokens per chunk
+  respect_semantic_boundaries: true
+  
+  rules:
+    no_split_table_cells: true          # Never split table cells
+    caption_with_figure: true           # Keep captions with figures
+    list_integrity: true                # Don't split lists
+    section_hierarchy: true              # Preserve section hierarchy
+    cross_reference_resolution: true     # Resolve cross-references
+  
+  token_limits:
+    paragraph: 512
+    section: 1024
+    table: 2048
+    figure: 256
+    list: 512
+
+# ============================================
+# BUDGET LIMITS
+# ============================================
+budget:
+  daily_budget_usd: 10.0                 # Maximum daily spend
+  per_document_budget_usd: 0.50          # Maximum per document
+  warning_threshold: 0.8                  # Warning at 80% of budget
+  monthly_budget_usd: 100.0               # Optional monthly cap
+
+# ============================================
+# STRATEGY COSTS (USD per page)
+# ============================================
+strategy_costs:
+  fast_text: 0.001        # $0.001 per page
+  layout_aware: 0.01      # $0.01 per page
+  vision_augmented: 0.05  # $0.05 per page
+
+# ============================================
+# OPENROUTER SETTINGS
+# ============================================
+openrouter:
+  model: "google/gemma-3-27b-it"
+  max_tokens_per_request: 4000
+  max_pages_per_batch: 5
+  timeout_seconds: 120
+  retry_attempts: 3
+  retry_min_wait: 4
+  retry_max_wait: 10
+  
+  token_costs:
+    input: 0.0000005      # $0.50 per 1M tokens
+    output: 0.0000015     # $1.50 per 1M tokens
+
+# ============================================
+# DOCUMENT CLASSIFICATION
+# ============================================
+classification:
+  domain_keywords:
+    financial:
+      - revenue
+      - profit
+      - loss
+      - income
+      - expense
+      - balance sheet
+      - income statement
+      - cash flow
+      - audit
+      - fiscal
+      - dividend
+      - earnings
+    
+    legal:
+      - agreement
+      - contract
+      - clause
+      - party
+      - hereby
+      - witness
+      - legal
+      - court
+      - law
+      - regulation
+      - compliance
+      - statute
+    
+    technical:
+      - specification
+      - technical
+      - system
+      - interface
+      - api
+      - implementation
+      - algorithm
+      - parameter
+      - configuration
+  
+  origin_heuristics:
+    font_presence_weight: 0.3
+    text_density_weight: 0.4
+    image_ratio_weight: 0.3
+
+# ============================================
+# PROVENANCE TRACKING
+# ============================================
+provenance:
+  store_bounding_boxes: true
+  store_content_hash: true
+  max_bbox_precision: 2     # Decimal places for coordinates
+  include_extracted_text: true
+  max_extracted_text_length: 500
+
+# ============================================
+# VECTOR STORE SETTINGS
+# ============================================
+vector_store:
+  embedding_model: "all-MiniLM-L6-v2"
+  distance_metric: "cosine"
+  batch_size: 100
+  n_results_default: 5
+  persist_directory: ".refinery/vectors"
+
+# ============================================
+# FACT TABLE SETTINGS
+# ============================================
+fact_table:
+  db_path: ".refinery/facts/facts.db"
+  enable_financial_extraction: true
+  enable_entity_extraction: true
+  enable_kv_extraction: true
+  vacuum_on_exit: false
+
+# ============================================
+# LOGGING SETTINGS
+# ============================================
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/refinery.log"
+  max_bytes: 10485760  # 10MB
+  backup_count: 5

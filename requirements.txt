@@ -1,76 +1,63 @@
-# Core dependencies
+# ============================================
+# DOCUMENT INTELLIGENCE REFINERY
+# MANDATORY CORE REQUIREMENTS ONLY
+# ============================================
+
+# ========== CORE DATA VALIDATION ==========
 pydantic>=2.0.0,<3.0.0
-PyYAML>=6.0,<7.0
-python-dotenv>=1.0.0,<2.0.0
 
-# PDF processing
-pdfplumber>=0.10.0,<0.11.0
-pypdf2>=3.0.0,<4.0.0
-pymupdf>=1.23.0,<2.0.0
-pdf2image>=1.16.0,<2.0.0
-Pillow>=10.0.0,<11.0.0
-reportlab>=4.0.0,<5.0.0  # For generating test PDFs
+# ========== PDF PROCESSING ==========
+pdfplumber>=0.10.0,<0.11.0          # Primary PDF text extraction
+pymupdf>=1.23.0,<2.0.0              # PDF manipulation and rendering
 
-# OCR and image processing
-pytesseract>=0.3.10,<0.4.0
-opencv-python>=4.8.0,<5.0.0
+# ========== ASYNC HTTP ==========
+aiohttp>=3.9.0,<4.0.0                # Async HTTP client for API calls
 
-# Document parsing frameworks
-# MinerU - install from GitHub
-# Docking - install from GitHub
+# ========== NUMERICAL COMPUTING ==========
+numpy>=1.24.0,<2.0.0                 # Numerical operations
 
-# Vector stores and embeddings
-chromadb>=0.4.0,<0.5.0
-faiss-cpu>=1.7.0,<2.0.0
-sentence-transformers>=2.2.0,<3.0.0
+# ========== IMAGE PROCESSING ==========
+Pillow>=10.0.0,<11.0.0               # Image handling
+pdf2image>=1.16.0,<2.0.0             # PDF to image conversion
 
-# Database
-sqlalchemy>=2.0.0,<3.0.0
-sqlite-utils>=3.0,<4.0
+# ========== TOKENIZATION ==========
+tiktoken>=0.5.0,<0.6.0               # Token counting for LLMs
 
-# LLM and API clients
-openai>=1.0.0,<2.0.0  # For OpenRouter compatibility
-httpx>=0.24.0,<0.25.0
-aiohttp>=3.9.0,<4.0.0
+# ========== CONFIGURATION ==========
+PyYAML>=6.0,<7.0                     # YAML configuration
 
-# LangGraph and agents
-langgraph>=0.0.20,<0.1.0
-langchain>=0.1.0,<0.2.0
-langchain-community>=0.1.0,<0.2.0
+# ========== RETRY LOGIC ==========
+tenacity>=8.2.0,<9.0.0               # Retry logic for API calls
 
-# Utilities
-tqdm>=4.66.0,<5.0.0
-click>=8.1.0,<9.0.0
-rich>=13.0.0,<14.0.0
-python-json-logger>=2.0.0,<3.0.0
-orjson>=3.9.0,<4.0.0  # Fast JSON processing
+# ========== VECTOR DATABASE ==========
+chromadb>=0.4.0,<0.5.0                # Vector storage for RAG
 
-# Testing
-pytest>=7.4.0,<8.0.0
-pytest-cov>=4.1.0,<5.0.0
-pytest-mock>=3.11.0,<4.0.0
-pytest-asyncio>=0.21.0,<0.22.0
+# ========== EMBEDDINGS ==========
+sentence-transformers>=2.2.0,<3.0.0   # Text embeddings
 
-# Development tools
-black>=23.0.0,<24.0.0
-mypy>=1.5.0,<2.0.0
-isort>=5.12.0,<6.0.0
-flake8>=6.1.0,<7.0.0
-pre-commit>=3.4.0,<4.0.0
+# ========== LLM INTEGRATION ==========
+openai>=1.0.0,<2.0.0                  # OpenRouter API client
 
-# Type stubs
-types-PyYAML>=6.0.0,<7.0.0
-types-requests>=2.31.0,<3.0.0
-types-setuptools>=68.0.0,<69.0.0
+# ========== ENVIRONMENT VARIABLES ==========
+python-dotenv>=1.0.0,<2.0.0           # Environment configuration
 
-# Optional: For better table extraction
-#camelot-py>=0.11.0,<0.12.0
-#tabula-py>=2.9.0,<3.0.0
+# ========== PROGRESS BARS ==========
+tqdm>=4.65.0,<5.0.0                   # Progress bars
 
-# Optional: For advanced layout analysis
-#layoutparser>=0.3.4,<0.4.0
-#detectron2 @ git+https://github.com/facebookresearch/detectron2.git  # Optional for layoutparser
+# ========== FILE SYSTEM ==========
+pathlib>=1.0.1                         # Path handling (built-in but specified)
 
-# Note: MinerU and Docking should be installed separately:
-# pip install git+https://github.com/opendatalab/MinerU.git
-# pip install git+https://github.com/DS4SD/docking.git
+# ========== DATE HANDLING ==========
+python-dateutil>=2.8.0,<3.0.0    
+      # Date parsing
+ 
+# ========== DATABASE ==========
+# SQLite is built into Python, no extra package needed
+
+# ========== PLATFORM SPECIFIC ==========
+# Windows: python-magic-bin for MIME type detection
+python-magic-bin>=0.4.14 ; platform_system == "Windows"
+
+#Spoppler_path = r"C:\Users\hp\Downloads\Release-25.12.0-0\poppler-25.12.0\Library\bin"
+
+ 

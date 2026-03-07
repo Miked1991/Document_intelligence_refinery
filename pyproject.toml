@@ -1,7 +1,53 @@
 [project]
-name = "document-intelligence-refine"
+name = "document-intelligence-refinery"
 version = "0.1.0"
-description = "Add your description here"
+description = "Production-grade document intelligence pipeline"
+authors = [
+    {name = "Forward Deployed Engineer", email = "fde@example.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = []
+requires-python = ">=3.9"
+dependencies = [
+    "pydantic>=2.0.0",
+    "pdfplumber>=0.10.0",
+    "pymupdf>=1.23.0",
+    "aiohttp>=3.9.0",
+    "numpy>=1.24.0",
+    "pillow>=10.0.0",
+    "pdf2image>=1.16.0",
+    "tiktoken>=0.5.0",
+    "pyyaml>=6.0",
+    "tenacity>=8.2.0",
+    "chromadb>=0.4.0",
+    "faiss-cpu>=1.7.0",
+     
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0"
+]
+
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

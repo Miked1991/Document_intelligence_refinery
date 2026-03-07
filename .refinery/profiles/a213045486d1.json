@@ -1,0 +1,31 @@
+{
+  "doc_id": "a213045486d1",
+  "filename": "CBE Annual Report 2006-7 .pdf",
+  "file_size_bytes": 35828477,
+  "page_count": 60,
+  "origin_type": "native_digital",
+  "layout_complexity": "table_heavy",
+  "language": {
+    "en": 0.9
+  },
+  "domain_hint": "financial",
+  "recommended_strategy": "layout_aware",
+  "confidence_thresholds": {
+    "character_density": 0.7,
+    "table_completeness": 0.8,
+    "layout_preservation": 0.75
+  },
+  "character_density_stats": {
+    "mean": 0.0033020936517592784,
+    "min": 0.0,
+    "max": 0.010086661248386012,
+    "std": 0.002327409819134052
+  },
+  "image_area_ratio": 0.20967579846457354,
+  "has_embedded_fonts": true,
+  "table_count_estimate": 109,
+  "figure_count_estimate": 0,
+  "extraction_cost_estimate": 0.0,
+  "processing_time_estimate": 0.0,
+  "created_at": "2026-03-07T22:42:24.935588"
+}

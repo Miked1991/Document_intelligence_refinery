@@ -1,16 +1,35 @@
-FROM python:3.11-slim
 
+### `Dockerfile`
+
+```dockerfile
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     poppler-utils \
     tesseract-ocr \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-COPY pyproject.toml README.md ./
-RUN pip install --no-cache-dir -e .[dev]
+# Copy requirements
+COPY pyproject.toml .
+COPY README.md .
 
-COPY src/ ./src/
-COPY rubric/ ./rubric/
-COPY tests/ ./tests/
+# Install Python dependencies
+RUN pip install --no-cache-dir -e .
 
-ENTRYPOINT ["python", "-m", "src.main"]
+# Copy application
+COPY src/ src/
+COPY config/ config/
+COPY tests/ tests/
+
+# Create necessary directories
+RUN mkdir -p .refinery/profiles .refinery/pageindex
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+
+# Run
+CMD ["python", "-m", "src.main"]

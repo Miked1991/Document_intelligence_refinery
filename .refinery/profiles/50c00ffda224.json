@@ -1,0 +1,31 @@
+{
+  "doc_id": "50c00ffda224",
+  "filename": "Annual_Report_JUNE-2019.pdf",
+  "file_size_bytes": 12173411,
+  "page_count": 32,
+  "origin_type": "mixed",
+  "layout_complexity": "single_column",
+  "language": {
+    "en": 0.9
+  },
+  "domain_hint": "financial",
+  "recommended_strategy": "vision_augmented",
+  "confidence_thresholds": {
+    "character_density": 0.7,
+    "table_completeness": 0.8,
+    "layout_preservation": 0.75
+  },
+  "character_density_stats": {
+    "mean": 0.001903844839488883,
+    "min": 9.976915181390713e-6,
+    "max": 0.009180757349915735,
+    "std": 0.0029945446971279543
+  },
+  "image_area_ratio": 0.6430004003261937,
+  "has_embedded_fonts": true,
+  "table_count_estimate": 5,
+  "figure_count_estimate": 0,
+  "extraction_cost_estimate": 0.0,
+  "processing_time_estimate": 0.0,
+  "created_at": "2026-03-07T22:30:05.683896"
+}

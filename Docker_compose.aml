@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  refinery:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+      - ./.refinery:/app/.refinery
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - PYTHONUNBUFFERED=1
+    command: python -m src.main --input /app/data --output /app/.refinery
+
+  # Optional: ChromaDB for vector storage
+  chromadb:
+    image: chromadb/chroma:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./chroma-data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
